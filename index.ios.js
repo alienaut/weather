@@ -2,6 +2,8 @@
 
 var React = require('react-native');
 
+var api = require('./src/api');
+
 var { AppRegistry, StyleSheet, MapView, View } = React;
 
 var Weather = React.createClass({
@@ -10,7 +12,10 @@ var Weather = React.createClass({
       pin: {
         latitude: 0,
         longitude: 0
-      }
+      },
+      city: '',
+      temperature: '',
+      description: ''
     };
   },
   render: function() {
@@ -29,6 +34,10 @@ var Weather = React.createClass({
         latitude: region.latitude,
         longitude: region.longitude
       }
+    });
+
+    api(region.latitude, region.longitude).then((data) => {
+      this.setState(data);
     });
   }
 });
