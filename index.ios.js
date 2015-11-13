@@ -4,7 +4,7 @@ var React = require('react-native');
 
 var api = require('./src/api');
 
-var { AppRegistry, StyleSheet, MapView, View } = React;
+var { AppRegistry, StyleSheet, MapView, View, Text } = React;
 
 var Weather = React.createClass({
   getInitialState: function() {
@@ -20,12 +20,19 @@ var Weather = React.createClass({
   },
   render: function() {
     return (
-      <MapView
-        annotations={[this.state.pin]}
-        onRegionChangeComplete={this.onRegionChangeComplete}
-        style={styles.map}
-      >
-      </MapView>
+      <View style={styles.container}>
+        <MapView
+          annotations={[this.state.pin]}
+          onRegionChangeComplete={this.onRegionChangeComplete}
+          style={styles.map}
+        >
+        </MapView>
+        <View style={styles.textWrapper}>
+          <Text style={styles.text}> {this.state.city} </Text>
+          <Text style={styles.text}> {this.state.tempature} </Text>
+          <Text style={styles.text}> {this.state.description} </Text>
+        </View>
+      </View>
     );
   },
   onRegionChangeComplete: function(region) {
@@ -43,9 +50,23 @@ var Weather = React.createClass({
 });
 
 var styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'stretch',
+    backgroundColor: '#F5FCFF'
+  },
   map: {
-    flex: 1
+    flex: 2,
+    marginTop: 20
+  },
+  textWrapper: {
+    flex: 1,
+    alignItems: 'center'
+  },
+  text: {
+    fontSize: 30
   }
-})
+});
 
 AppRegistry.registerComponent('weather', () => Weather);
