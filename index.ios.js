@@ -2,23 +2,40 @@
 
 var React = require('react-native');
 
-var { AppRegistry, StyleSheet, Text, View } = React;
+var { AppRegistry, StyleSheet, MapView, View } = React;
 
 var Weather = React.createClass({
+  getInitialState: function() {
+    return {
+      pin: {
+        latitude: 0,
+        longitude: 0
+      }
+    };
+  },
   render: function() {
     return (
-      <View style={styles.container}>
-        <Text>Hello, World!</Text>
-      </View>
+      <MapView
+        annotations={[this.state.pin]}
+        onRegionChangeComplete={this.onRegionChangeComplete}
+        style={styles.map}
+      >
+      </MapView>
     );
+  },
+  onRegionChangeComplete: function(region) {
+    this.setState({
+      pin: {
+        latitude: region.latitude,
+        longitude: region.longitude
+      }
+    });
   }
 });
 
 var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+  map: {
+    flex: 1
   }
 })
 
